@@ -5,7 +5,10 @@ import decimal
 import datetime
 from datetime import timedelta, date
 
-"""mock data"""
+"""
+mock data
+use a service to get employee pay records
+"""
 PAYCYCLES = [
     {'empid' : 1, 'paydate': '2014-01-17'},
     {'empid' : 1, 'paydate': '2015-01-01'},
@@ -13,6 +16,10 @@ PAYCYCLES = [
 ]
 
 FREQUENCY = 15 #biweekly frequency of days
+YEARS  = 5 #default years of assumed employment
+DAYS = 364 #
+TOTAL_DAYS_CHECK = YEARS * DAYS
+
 
 def get_last_pay(empid):
     """get last pay
@@ -59,14 +66,14 @@ def get_x_paydays(empid, end_date):
     next_paydate = move_days(start_date, FREQUENCY)
 
     '''days between start and end date'''
-    days_range = daterange(start_date, end_date)
+    days_range = daterange(start_date, move_days(end_date, 1)) #add 1 day to make it inclusive
     i = 1 # iterator
 
-    days_range_cnt = len(daterange(start_date, end_date)) 
+    days_range_cnt = TOTAL_DAYS_CHECK #len(daterange(start_date, end_date)) 
 
     found_paydates = []
     while True:
-        '''check if out of loop'''
+        '''check when to exit loop'''
         if i <= days_range_cnt:
             if next_paydate in days_range:
                 found_paydates.append(next_paydate)
@@ -78,7 +85,25 @@ def get_x_paydays(empid, end_date):
     return len(found_paydates), found_paydates
 
 def is_payday(empid, date = None):
-    """for given empid and date, return bool on valid paydate
+    """
+    for given empid and date, return bool on valid paydate
+    :params: int, date
+    :return bool
+    """
+
+    count, found_paydates = get_x_paydays(empid, date)
+    found = False
+    for x in found_paydates:
+        if date == x:
+            found = True
+            break
+
+    return found
+
+def is_payday2(empid, date = None):
+    """
+    THIS IS AN ALTERNATE IMPLEMENTATION OF is payday using modulus
+    for given empid and date, return bool on valid paydate
     :params: int, date
     :return bool
     """
