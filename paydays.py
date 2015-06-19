@@ -5,33 +5,77 @@ import decimal
 import datetime
 from datetime import timedelta, date
 
-""" {'empid' : 1, 'paydate': '2015-01-15'},
-    {'empid' : 1, 'paydate': '2015-01-30'},
-"""   
-
 """mock data"""
 PAYCYCLES = [
+    {'empid' : 1, 'paydate': '2014-01-17'},
     {'empid' : 1, 'paydate': '2015-01-01'},
     {'empid' : 2, 'paydate': '2015-02-17'}
 ]
 
-FREQUENCY = 15
+FREQUENCY = 15 #biweekly frequency of days
 
 def get_last_pay(empid):
     """get last pay
     :params: int
     :return: date
     """
-    seq = [x['paydate'] for x in PAYCYCLES if x['empid'] == empid]
-    return(datetime.datetime.strptime(max(seq), "%Y-%m-%d").date())
-    
+    paydays = [x['paydate'] for x in PAYCYCLES if x['empid'] == empid]
+    return(datetime.datetime.strptime(max(paydays), "%Y-%m-%d").date())
+
+def get_first_pay(empid):
+    """get last pay
+    :params: int
+    :return: date
+    """
+    paydays = [x['paydate'] for x in PAYCYCLES if x['empid'] == empid]
+    return(datetime.datetime.strptime(min(paydays), "%Y-%m-%d").date())
+
+def get_next_pay(empid):
+    """for given empid, get next pay date
+    :params: int
+    :return date
+    """
+    last_paydate = get_last_pay(empid)
+    next_paydate = move_days(last_paydate, FREQUENCY)
+    return next_paydate
 
 def daterange(start_date, end_date):
+    """get list of ranges
+    return list or generator"""
+    dates = []
     for n in range(int ((end_date - start_date).days)):
-        yield start_date + timedelta(n)
+        # yield start_date + timedelta(n)
+        dates.append(start_date + timedelta(n))
+    return dates
 
 def dayrange(start_date, end_date):
     return (end_date - start_date).days
+
+def get_x_paydays(empid, end_date):
+    """
+    Get X number of pay days for a given end date and last date of empid
+    """
+    start_date = get_last_pay(empid)
+    next_paydate = move_days(start_date, FREQUENCY)
+
+    '''days between start and end date'''
+    days_range = daterange(start_date, end_date)
+    i = 1 # iterator
+
+    days_range_cnt = len(daterange(start_date, end_date)) 
+
+    found_paydates = []
+    while True:
+        '''check if out of loop'''
+        if i <= days_range_cnt:
+            if next_paydate in days_range:
+                found_paydates.append(next_paydate)
+            next_paydate = move_days(next_paydate, FREQUENCY)    
+        else:
+            break
+        i+=1
+
+    return len(found_paydates), found_paydates
 
 def is_payday(empid, date = None):
     """for given empid and date, return bool on valid paydate
