@@ -9,3 +9,6 @@ Given a user's pay cycle data provide functions to return the following:
 - If a date is not specified, default to today's date. Return a boolean value
 - get the user's next payday. Return a python date object.
 - get the user's next X number of paydays starting at a given date. If a date is not supplied, default to today. Return python date objects.
+
+#Unit Testing
+- sniffer -x tests.test_paydays -x--nocapture -x--verbose
