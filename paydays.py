@@ -69,7 +69,7 @@ def get_x_paydays(empid, end_date):
     days_range = daterange(start_date, move_days(end_date, 1)) #add 1 day to make it inclusive
     i = 1 # iterator
 
-    days_range_cnt = TOTAL_DAYS_CHECK #len(daterange(start_date, end_date)) 
+    days_range_cnt = TOTAL_DAYS_CHECK 
 
     found_paydates = []
     while True:
@@ -96,6 +96,7 @@ def is_payday(empid, date = None):
     for x in found_paydates:
         if date == x:
             found = True
+            #found break out of loop
             break
 
     return found
