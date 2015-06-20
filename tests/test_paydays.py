@@ -61,7 +61,7 @@ class TestHelper(unittest.TestCase):
         assert(count == 3)
         assert(found_paydates == check_found_paydates)
 
-    def skip_get_x_paydays_nodate(self):
+    def test_get_x_paydays_nodate(self):
         """CASE (3b) For NO given date, use current date, get the user's next X number of paydays. 
         Return python date objects."""
         end_date = datetime.datetime.now().date()
