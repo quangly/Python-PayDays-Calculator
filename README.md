@@ -12,3 +12,4 @@ Given a user's pay cycle data provide functions to return the following:
 
 #Unit Testing
 - sniffer -x tests.test_paydays -x--nocapture -x--verbose
+![alt tag](https://github.com/deltadreams/Python-PayDays-Calculator/blob/master/screenshots/screenshot.png)
