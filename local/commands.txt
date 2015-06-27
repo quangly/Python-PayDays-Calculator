@@ -1,2 +1,14 @@
 #Unit Testing
 sniffer -x tests.test_paydays -x--nocapture -x--verbose
+
+#install pip
+sudo easy_install pip
+
+#install virtualenv
+sudo pip install virtualenv
+
+#create virtualenv
+virtualenv myenv
+
+#mac
+source myenv/bin/activate
