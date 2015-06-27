@@ -50,7 +50,7 @@ class TestHelper(unittest.TestCase):
         assert(check_date == last_pay_date)
 
     def test_get_x_paydays_paydate(self):
-        """CASE (3a) For given date, get the user's next X number of paydays. 
+        """CASE (3a) For given date '2015-02-15', get the user's next X number of paydays. 
         Return python date objects."""
         end_date = date(2015, 2, 15)
         empid = 1
@@ -60,6 +60,9 @@ class TestHelper(unittest.TestCase):
                                 datetime.date(2015, 2, 15)]
         assert(count == 3)
         assert(found_paydates == check_found_paydates)
+        print('\n')
+        for d in check_found_paydates:
+            print(d)        
 
     def test_get_x_paydays_nodate(self):
         """CASE (3b) For NO given date, use current date, get the user's next X number of paydays. 
