@@ -13,7 +13,7 @@ PAYCYCLES = [
     {'empid' : 1, 'paydate': '2014-01-17'},
     {'empid' : 1, 'paydate': '2015-01-01'},
     {'empid' : 2, 'paydate': '2015-02-17'},
-    {'empid' : 3, 'paydate': '2015-02-17'}
+    {'empid' : 3, 'paydate': '2015-02-18'}
 ]
 
 FREQUENCY = 15 #biweekly frequency of days
