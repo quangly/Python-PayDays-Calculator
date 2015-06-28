@@ -69,12 +69,10 @@ def get_x_paydays(empid, end_date):
     days_range = daterange(start_date, move_days(end_date, 1)) #add 1 day to make it inclusive
     i = 1 # iterator
 
-    days_range_cnt = TOTAL_DAYS_CHECK 
-
     found_paydates = []
     while True:
         '''check when to exit loop'''
-        if i <= days_range_cnt:
+        if i <= TOTAL_DAYS_CHECK:
             if next_paydate in days_range:
                 found_paydates.append(next_paydate)
             next_paydate = move_days(next_paydate, FREQUENCY)    
